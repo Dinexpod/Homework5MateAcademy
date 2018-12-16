@@ -1,3 +1,5 @@
+package shop;
+
 public enum TypeFruit {
     APPLE,
     AVOCADO,
