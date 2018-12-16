@@ -3,13 +3,13 @@ package shop;
 public class Fruit {
     private TypeFruit type;
     private int shelfLife;
-    private String  data;
+    private String postDate;
     private double price;
 
-    public Fruit(TypeFruit type, int shelfLife, String data, double price) {
+    public Fruit(TypeFruit type, int shelfLife, String postDate, double price) {
         this.type = type;
         this.shelfLife = shelfLife;
-        this.data = data;
+        this.postDate = postDate;
         this.price = price;
     }
 
@@ -32,12 +32,12 @@ public class Fruit {
         this.shelfLife = shelfLife;
     }
 
-    public String getData() {
-        return data;
+    public String getPostDate() {
+        return postDate;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
     }
 
     public double getPrice() {
@@ -53,7 +53,7 @@ public class Fruit {
         return "Fruit{" +
                 "type=" + type +
                 ", shelfLife=" + shelfLife +
-                ", data='" + data + '\'' +
+                ", postDate='" + postDate + '\'' +
                 ", price=" + price +
                 '}';
     }
