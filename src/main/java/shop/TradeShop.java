@@ -21,11 +21,11 @@ public class TradeShop {
     private static int tmpIndex;
     private final static long DAY_IN_MLS = 86_400_000;
 
-    public void add(Fruit fruit) {
+    void add(Fruit fruit) {
         fruits.add(fruit);
     }
 
-    public void addFruit(String pathToJsonFile) throws JsonProcessingException {
+    void addFruit(String pathToJsonFile) throws JsonProcessingException {
         File file = new File(pathToJsonFile);
         ObjectMapper mapper = new ObjectMapper();
         List<Fruit> fruitsTmp = new ArrayList<>();
@@ -85,13 +85,13 @@ public class TradeShop {
         }
     }
 
-    public List<Fruit> getSpoiledFruits(Date date) {
+    List<Fruit> getSpoiledFruits(Date date) {
         return fruits.stream().filter(fruit ->
                 ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
                 .collect(Collectors.toList());
     }
 
-    public List<Fruit> getAvailableFruits(Date date) {
+    List<Fruit> getAvailableFruits(Date date) {
         return fruits.stream().filter(fruit ->
                 ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
                 .collect(Collectors.toList());
@@ -109,7 +109,7 @@ public class TradeShop {
         return dateTmp;
     }
 
-    public List<Fruit> getSpoiledFruits(Date date, TypeFruit type) {
+    List<Fruit> getSpoiledFruits(Date date, TypeFruit type) {
         return fruits.stream().filter(fruit -> (fruit.getType() == type))
                 .filter(fruit ->
                         ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
@@ -117,7 +117,7 @@ public class TradeShop {
     }
 
 
-    public List<Fruit> getAvailableFruits(Date date, TypeFruit type) {
+    List<Fruit> getAvailableFruits(Date date, TypeFruit type) {
         return fruits.stream().filter(fruit -> (fruit.getType() == type))
                 .filter((Fruit fruit) ->
                         ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
