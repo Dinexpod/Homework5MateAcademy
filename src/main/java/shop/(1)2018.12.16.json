@@ -1,0 +1,11 @@
+[ {
+  "type" : "BLACKBERRY",
+  "shelfLife" : 12,
+  "postDate" : "2018.12.16",
+  "price" : 9.0
+}, {
+  "type" : "DURIAN",
+  "shelfLife" : 10,
+  "postDate" : "2018.12.16",
+  "price" : 7.0
+} ]
