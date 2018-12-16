@@ -61,9 +61,10 @@ public class Main {
     }
 
     public static String createPath() {
+        countOfPosts++;
         Date date = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
-        return ("src/main/java/shop/" + "(" + (countOfPosts++) + ")" + formatForDateNow.format(date) + ".json");
+        return ("src/main/java/shop/" + "(" + countOfPosts + ")" + formatForDateNow.format(date) + ".json");
     }
 
     public static String createPath(String date) {

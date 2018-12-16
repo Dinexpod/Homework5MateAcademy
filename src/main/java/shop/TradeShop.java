@@ -66,7 +66,6 @@ public class TradeShop {
     }
 
     void load(String pathToJsonFile) {
-        fruits = null;
         File file = new File(pathToJsonFile);
         ObjectMapper mapper = new ObjectMapper();
 
