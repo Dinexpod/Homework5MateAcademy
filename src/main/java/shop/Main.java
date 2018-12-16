@@ -39,12 +39,20 @@ public class Main {
 
         main.load();
 
-        List<Fruit> spoiledFruitF = main.getSpoiledFruit("2018.11.1");
-        System.out.println(spoiledFruitF);
+        System.out.println("Spoiled fruits: " + main.getSpoiledFruit("2018.11.1"));
+        System.out.println("Avaliable fruits: " + main.getAvaliableFruits("2018.11.1"));
 
     }
 
+    private List<Fruit> getAvaliableFruits(String  date) {
+        return tradeShop.getAvaliableFruits(parseDate(date));
+    }
+
     private List<Fruit> getSpoiledFruit(String  date) {
+        return tradeShop.getSpoiledFruits(parseDate(date));
+    }
+
+    private Date parseDate(String  date) {
         DateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         Date dateTmp = null;
         try {
@@ -52,7 +60,8 @@ public class Main {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return tradeShop.getSpoiledFruits(dateTmp);
+
+        return dateTmp;
     }
 
     private void load() {

@@ -84,15 +84,25 @@ public class TradeShop {
     }
 
     public List<Fruit> getSpoiledFruits(Date date) {
-        return fruits.stream().filter((Fruit fruit) -> {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-            Date dateTmp = null;
-            try {
-                dateTmp = format.parse(fruit.getData());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            return dateTmp.getTime() < date.getTime();
-        }).collect(Collectors.toList());
+        return fruits.stream().filter((Fruit fruit) ->
+             (parseData(fruit)).getTime() < date.getTime())
+                .collect(Collectors.toList());
+    }
+
+    public List<Fruit> getAvaliableFruits(Date date) {
+        return fruits.stream().filter((Fruit fruit) ->
+                (parseData(fruit)).getTime() >= date.getTime())
+                .collect(Collectors.toList());
+    }
+
+    private Date parseData(Fruit fruit) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        Date dateTmp = null;
+        try {
+            dateTmp = format.parse(fruit.getData());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateTmp;
     }
 }
