@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,10 +19,15 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TradeShop {
     private List<Fruit> fruits = new ArrayList<>();
@@ -43,7 +47,7 @@ public class TradeShop {
             fruitsTmp.add(fruits.get(i));
         }
 
-        String postage = ("\"fruits\": " + mapper.writeValueAsString(fruitsTmp));
+        String postage = mapper.writeValueAsString(fruitsTmp);
 
         doPrintWriter(postage, file);
 
@@ -55,9 +59,8 @@ public class TradeShop {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String allPostages = mapper.writeValueAsString(fruits);
-//        "\"all information\": " +
 
-                doPrintWriter(allPostages, file);
+        doPrintWriter(allPostages, file);
     }
 
     void load(String pathToJsonFile) {
@@ -70,7 +73,6 @@ public class TradeShop {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(fruits);
     }
 
     private void doPrintWriter(String postage, File file) {
@@ -79,5 +81,18 @@ public class TradeShop {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Fruit> getSpoiledFruits(Date date) {
+        return fruits.stream().filter((Fruit fruit) -> {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+            Date dateTmp = null;
+            try {
+                dateTmp = format.parse(fruit.getData());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return dateTmp.getTime() < date.getTime();
+        }).collect(Collectors.toList());
     }
 }
