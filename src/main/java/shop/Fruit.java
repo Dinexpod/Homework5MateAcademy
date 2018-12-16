@@ -13,6 +13,9 @@ public class Fruit {
         this.price = price;
     }
 
+    public Fruit() {
+    }
+
     public TypeFruit getType() {
         return type;
     }
@@ -43,5 +46,15 @@ public class Fruit {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Fruit{" +
+                "type=" + type +
+                ", shelfLife=" + shelfLife +
+                ", data='" + data + '\'' +
+                ", price=" + price +
+                '}';
     }
 }
