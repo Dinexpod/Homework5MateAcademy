@@ -1,31 +1,18 @@
 package shop;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,10 +75,10 @@ public class TradeShop {
              (parseData(fruit)).getTime() < date.getTime())
                 .collect(Collectors.toList());
     }
-
+////////////////////////////////////////////////////
     public List<Fruit> getAvaliableFruits(Date date) {
         return fruits.stream().filter((Fruit fruit) ->
-                (parseData(fruit)).getTime() >= date.getTime())
+                ((parseData(fruit)).getTime() + fruit.getShelfLife()) >= date.getTime())
                 .collect(Collectors.toList());
     }
 
@@ -99,7 +86,7 @@ public class TradeShop {
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         Date dateTmp = null;
         try {
-            dateTmp = format.parse(fruit.getData());
+            dateTmp = format.parse(fruit.getPostDate());
         } catch (ParseException e) {
             e.printStackTrace();
         }

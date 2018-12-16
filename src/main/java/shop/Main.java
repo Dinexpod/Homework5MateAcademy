@@ -42,6 +42,7 @@ public class Main {
         System.out.println("Spoiled fruits: " + main.getSpoiledFruit("2018.11.1"));
         System.out.println("Avaliable fruits: " + main.getAvaliableFruits("2018.11.1"));
 
+
     }
 
     private List<Fruit> getAvaliableFruits(String  date) {
