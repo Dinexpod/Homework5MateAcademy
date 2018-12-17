@@ -15,7 +15,7 @@ public class TradeShop {
     private List<Fruit> fruits = new ArrayList<>();
     private final static long DAY_IN_MLS = 86_400_000;
 
-    void addFruit(List<Fruit> fruits, String pathToJsonFile) throws IOException {
+    void addFruits(List<Fruit> fruits, String pathToJsonFile) throws IOException {
         this.fruits.addAll(fruits);
 
         File file = new File(pathToJsonFile);
