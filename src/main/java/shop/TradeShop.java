@@ -1,15 +1,10 @@
 package shop;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -25,7 +20,7 @@ public class TradeShop {
         fruits.add(fruit);
     }
 
-    void addFruit(String pathToJsonFile) throws JsonProcessingException {
+    void addFruit(String pathToJsonFile) throws IOException {
         File file = new File(pathToJsonFile);
         ObjectMapper mapper = new ObjectMapper();
         List<Fruit> fruitsTmp = new ArrayList<>();
@@ -36,33 +31,18 @@ public class TradeShop {
             fruitsTmp.add(fruits.get(i));
         }
 
-        String postage = mapper.writeValueAsString(fruitsTmp);
-
-        doPrintWriter(postage, file);
+        mapper.writeValue(file, fruitsTmp);
 
         tmpIndex = fruits.size();
     }
 
-    List<Fruit> getAddedFruits(Date date) {
-        return fruits.stream().filter(fruit ->
-                (parseData(fruit)).getTime() == date.getTime())
-                .collect(Collectors.toList());
-    }
-
-    List<Fruit> getAddedFruits(Date date, TypeFruit type) {
-        return fruits.stream().filter(fruit -> (fruit.getType() == type) && ((parseData(fruit)).getTime() == date.getTime()))
-                .collect(Collectors.toList());
-    }
-
-    void save(String pathToJsonFile) throws JsonProcessingException {
+    void save(String pathToJsonFile) throws IOException {
         File file = new File(pathToJsonFile);
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        String allPostages = mapper.writeValueAsString(fruits);
-
-        doPrintWriter(allPostages, file);
+        mapper.writeValue(file, fruits);
     }
 
     void load(String pathToJsonFile) {
@@ -76,50 +56,41 @@ public class TradeShop {
         }
     }
 
-    private void doPrintWriter(String postage, File file) {
-        try (PrintWriter writer = new PrintWriter(file)) {
-            writer.write(postage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    List<Fruit> getAddedFruits(Date date) {
+        return fruits.stream().filter(fruit ->
+                (fruit.getDate().getTime() / DAY_IN_MLS) == (date.getTime() / DAY_IN_MLS))
+                .collect(Collectors.toList());
+    }
+
+    List<Fruit> getAddedFruits(Date date, TypeFruit type) {
+        return fruits.stream().filter(fruit -> (fruit.getType() == type)
+                && ((fruit.getDate().getTime() / DAY_IN_MLS) == (date.getTime() / DAY_IN_MLS)))
+                .collect(Collectors.toList());
     }
 
     List<Fruit> getSpoiledFruits(Date date) {
         return fruits.stream().filter(fruit ->
-                ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
+                (fruit.getDate().getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
                 .collect(Collectors.toList());
     }
 
     List<Fruit> getAvailableFruits(Date date) {
         return fruits.stream().filter(fruit ->
-                ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
+                (fruit.getDate().getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
                 .collect(Collectors.toList());
-    }
-
-    private Date parseData(Fruit fruit) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        Date dateTmp = null;
-
-        try {
-            dateTmp = format.parse(fruit.getPostDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return dateTmp;
     }
 
     List<Fruit> getSpoiledFruits(Date date, TypeFruit type) {
         return fruits.stream().filter(fruit -> (fruit.getType() == type))
                 .filter(fruit ->
-                        ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
+                        (fruit.getDate().getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) <= date.getTime())
                 .collect(Collectors.toList());
     }
-
 
     List<Fruit> getAvailableFruits(Date date, TypeFruit type) {
         return fruits.stream().filter(fruit -> (fruit.getType() == type))
                 .filter((Fruit fruit) ->
-                        ((parseData(fruit)).getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
+                        (fruit.getDate().getTime() + (fruit.getShelfLife() * DAY_IN_MLS)) > date.getTime())
                 .collect(Collectors.toList());
     }
 }
