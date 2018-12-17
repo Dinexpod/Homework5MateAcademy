@@ -24,7 +24,7 @@ public class Main {
         tmpFruits.add(avocado);
         tmpFruits.add(grape);
 
-        tradeShop.addFruit(tmpFruits, createPath());
+        tradeShop.addFruits(tmpFruits, createPath());
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2019, (2 - 1), (16 + 1));
@@ -38,7 +38,7 @@ public class Main {
         tmpFruits1.add(avocado1);
         tmpFruits1.add(grape1);
 
-        tradeShop.addFruit(tmpFruits1, createPath());
+        tradeShop.addFruits(tmpFruits1, createPath());
 
         tradeShop.save("src/main/java/shop/allInformation.json");
 
