@@ -1,22 +1,20 @@
 package shop;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Main {
     private static int countOfPosts;
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws IOException {
         TradeShop tradeShop = new TradeShop();
 
-        Fruit banana = new Fruit(TypeFruit.BANANA, 1, "2018.10.10", 187);
-        Fruit apple = new Fruit(TypeFruit.APPLE, 2, "2018.10.10", 117);
-        Fruit avocado = new Fruit(TypeFruit.AVOCADO, 3, "2018.10.10", 19);
-        Fruit grape = new Fruit(TypeFruit.GRAPE, 10, "2018.10.10", 57);
+        Fruit banana = new Fruit(TypeFruit.BANANA, 1, (new Date()), 187);
+        Fruit apple = new Fruit(TypeFruit.APPLE, 1, (new Date()), 117);
+        Fruit avocado = new Fruit(TypeFruit.AVOCADO, 3, (new Date()), 19);
+        Fruit grape = new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57);
 
         tradeShop.add(banana);
         tradeShop.add(apple);
@@ -25,8 +23,12 @@ public class Main {
 
         tradeShop.addFruit(createPath());
 
-        Fruit avocado1 = new Fruit(TypeFruit.BLACKBERRY, 12, setDate(), 9);
-        Fruit grape1 = new Fruit(TypeFruit.DURIAN, 10, setDate(), 7);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2019, (2 - 1), (16 + 1));
+        Date date = calendar.getTime();
+
+        Fruit avocado1 = new Fruit(TypeFruit.BLACKBERRY, 12, date, 9);
+        Fruit grape1 = new Fruit(TypeFruit.DURIAN, 10, date, 7);
 
         tradeShop.add(avocado1);
         tradeShop.add(grape1);
@@ -37,27 +39,14 @@ public class Main {
 
         tradeShop.load("src/main/java/shop/allInformation.json");
 
-        System.out.println("Spoiled fruits: " + tradeShop.getSpoiledFruits(parseDate("2018.10.12")));
-        System.out.println("Avaliable fruits: " + tradeShop.getAvailableFruits(parseDate("2018.10.12")));
+        System.out.println("\nSpoiled fruits: " + tradeShop.getSpoiledFruits(date));
+        System.out.println("Avaliable fruits: " + tradeShop.getAvailableFruits(date));
 
-        System.out.println("Spoiled fruits (SOME TYPE): " + tradeShop.getSpoiledFruits(parseDate("2018.10.12"), TypeFruit.BANANA));
-        System.out.println("Avaliable fruits (SOME TYPE): " + tradeShop.getAvailableFruits(parseDate("2018.10.12"), TypeFruit.AVOCADO));
+        System.out.println("\nSpoiled fruits (SOME TYPE): " + tradeShop.getSpoiledFruits(date, TypeFruit.BANANA));
+        System.out.println("Avaliable fruits (SOME TYPE): " + tradeShop.getAvailableFruits(date, TypeFruit.AVOCADO));
 
-        System.out.println("EXIST: " + tradeShop.getAddedFruits(parseDate("2018.10.10")));
-        System.out.println("EXIST (SOME TYPE): " + tradeShop.getAddedFruits(parseDate("2018.10.12"), TypeFruit.GRAPE));
-    }
-
-    private static Date parseDate(String date) {
-        DateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        Date dateTmp = null;
-
-        try {
-            dateTmp = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return dateTmp;
+        System.out.println("\nEXIST: " + tradeShop.getAddedFruits(date));
+        System.out.println("EXIST (SOME TYPE): " + tradeShop.getAddedFruits(date, TypeFruit.BLACKBERRY));
     }
 
     public static String createPath() {
@@ -65,15 +54,5 @@ public class Main {
         Date date = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
         return ("src/main/java/shop/" + "(" + countOfPosts + ")" + formatForDateNow.format(date) + ".json");
-    }
-
-    public static String createPath(String date) {
-        return ("src/main/java/shop/" + date + ".json");
-    }
-
-    public static String setDate() {
-        Date date = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy.MM.dd");
-        return formatForDateNow.format(date);
     }
 }

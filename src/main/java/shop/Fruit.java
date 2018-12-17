@@ -1,15 +1,21 @@
 package shop;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
 public class Fruit {
     private TypeFruit type;
     private int shelfLife;
-    private String postDate;
+    @JsonFormat
+            (shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
+    private Date date;
     private double price;
 
-    public Fruit(TypeFruit type, int shelfLife, String postDate, double price) {
+    public Fruit(TypeFruit type, int shelfLife, Date date, double price) {
         this.type = type;
         this.shelfLife = shelfLife;
-        this.postDate = postDate;
+        this.date = date;
         this.price = price;
     }
 
@@ -32,12 +38,12 @@ public class Fruit {
         this.shelfLife = shelfLife;
     }
 
-    public String getPostDate() {
-        return postDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setPostDate(String postDate) {
-        this.postDate = postDate;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public double getPrice() {
@@ -53,7 +59,7 @@ public class Fruit {
         return "Fruit{" +
                 "type=" + type +
                 ", shelfLife=" + shelfLife +
-                ", postDate='" + postDate + '\'' +
+                ", postDate='" + date + '\'' +
                 ", price=" + price +
                 '}';
     }
