@@ -2,26 +2,29 @@ package shop;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
     private static int countOfPosts;
 
     public static void main(String[] args) throws IOException {
         TradeShop tradeShop = new TradeShop();
+        List<Fruit> tmpFruits = new ArrayList<>();
 
         Fruit banana = new Fruit(TypeFruit.BANANA, 1, (new Date()), 187);
         Fruit apple = new Fruit(TypeFruit.APPLE, 1, (new Date()), 117);
         Fruit avocado = new Fruit(TypeFruit.AVOCADO, 3, (new Date()), 19);
         Fruit grape = new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57);
 
-        tradeShop.add(banana);
-        tradeShop.add(apple);
-        tradeShop.add(avocado);
-        tradeShop.add(grape);
+        tmpFruits.add(banana);
+        tmpFruits.add(apple);
+        tmpFruits.add(avocado);
+        tmpFruits.add(grape);
 
-        tradeShop.addFruit(createPath());
+        tradeShop.addFruit(tmpFruits, createPath());
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(2019, (2 - 1), (16 + 1));
@@ -30,10 +33,12 @@ public class Main {
         Fruit avocado1 = new Fruit(TypeFruit.BLACKBERRY, 12, date, 9);
         Fruit grape1 = new Fruit(TypeFruit.DURIAN, 10, date, 7);
 
-        tradeShop.add(avocado1);
-        tradeShop.add(grape1);
+        List<Fruit> tmpFruits1 = new ArrayList<>();
 
-        tradeShop.addFruit(createPath());
+        tmpFruits1.add(avocado1);
+        tmpFruits1.add(grape1);
+
+        tradeShop.addFruit(tmpFruits1, createPath());
 
         tradeShop.save("src/main/java/shop/allInformation.json");
 
