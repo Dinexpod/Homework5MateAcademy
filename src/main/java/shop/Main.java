@@ -16,8 +16,7 @@ public class Main {
                 new Fruit(TypeFruit.BANANA, 1, (new Date()), 187),
                 new Fruit(TypeFruit.APPLE, 1, (new Date()), 117),
                 new Fruit(TypeFruit.AVOCADO, 3, (new Date()), 19),
-                new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57)
-        );
+                new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57));
 
         tradeShop.addFruits(tmpFruits, createPath());
 
