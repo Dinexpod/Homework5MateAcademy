@@ -2,7 +2,7 @@ package shop;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,17 +12,11 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         TradeShop tradeShop = new TradeShop();
-        List<Fruit> tmpFruits = new ArrayList<>();
-
-        Fruit banana = new Fruit(TypeFruit.BANANA, 1, (new Date()), 187);
-        Fruit apple = new Fruit(TypeFruit.APPLE, 1, (new Date()), 117);
-        Fruit avocado = new Fruit(TypeFruit.AVOCADO, 3, (new Date()), 19);
-        Fruit grape = new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57);
-
-        tmpFruits.add(banana);
-        tmpFruits.add(apple);
-        tmpFruits.add(avocado);
-        tmpFruits.add(grape);
+        List<Fruit> tmpFruits = Arrays.asList(
+                new Fruit(TypeFruit.BANANA, 1, (new Date()), 187),
+                new Fruit(TypeFruit.APPLE, 1, (new Date()), 117),
+                new Fruit(TypeFruit.AVOCADO, 3, (new Date()), 19),
+                new Fruit(TypeFruit.GRAPE, 10, (new Date()), 57));
 
         tradeShop.addFruits(tmpFruits, createPath());
 
@@ -30,15 +24,12 @@ public class Main {
         calendar.set(2019, (2 - 1), (16 + 1));
         Date date = calendar.getTime();
 
-        Fruit avocado1 = new Fruit(TypeFruit.BLACKBERRY, 12, date, 9);
-        Fruit grape1 = new Fruit(TypeFruit.DURIAN, 10, date, 7);
+        tmpFruits = Arrays.asList(
+                new Fruit(TypeFruit.BLACKBERRY, 12, date, 9),
+                new Fruit(TypeFruit.DURIAN, 10, date, 7)
+        );
 
-        List<Fruit> tmpFruits1 = new ArrayList<>();
-
-        tmpFruits1.add(avocado1);
-        tmpFruits1.add(grape1);
-
-        tradeShop.addFruits(tmpFruits1, createPath());
+        tradeShop.addFruits(tmpFruits, createPath());
 
         tradeShop.save("src/main/java/shop/allInformation.json");
 
